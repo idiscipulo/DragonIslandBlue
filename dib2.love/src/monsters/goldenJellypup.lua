@@ -10,7 +10,7 @@ function GoldenJellypupMonster:new(level, healthCur, team, status)
     -- @future.isaiah i'm doing it this way for visibility
     -- of variable meaning
     local data = {
-        image = 'goldenJellypup',
+        image = 'AquaFiend', --goldenJellypup
         name = 'Golden Jellypup',
         faction = 'GOLDEN',
         level = level,
