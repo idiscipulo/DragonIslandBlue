@@ -1,0 +1,131 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <title>Swagger Generator</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body onload="create_form()">
+        <script>
+            var title = "";
+            var desc = "";
+            var selected = 1;
+
+            // generated Swagger area
+            var gen_area_div = document.createElement("div");
+            gen_area_div.setAttribute("class", "gen-area-div");
+                
+            var gen_area = document.createElement("textarea");
+            gen_area.setAttribute("class", "gen-area");
+
+            gen_area_div.append(gen_area);
+
+            function generate() {
+                gen_area.innerHTML = "\"\"\"" + title;
+            }
+
+            function save_values() {
+                title = document.getElementById("Title").value;
+                desc = document.getElementById("Description").value;
+                console.log(title);
+                console.log(desc);
+            }
+
+            function reset() {
+                save_values();
+                create_form();
+            }
+
+            function create_text_input(name, value) {
+                var temp_div = document.createElement("div");
+                temp_div.setAttribute("class", "form-text-field");
+
+                var title_label = document.createElement("p");
+                title_label.setAttribute("class", "form-label");
+                title_label.innerHTML = name;
+
+                var title_inp = document.createElement("input");
+                title_inp.setAttribute("class", "form-input");
+                title_inp.setAttribute("type", "text");
+                title_inp.setAttribute("id", name);
+                title_inp.setAttribute("value", value);
+
+                temp_div.append(title_label);
+                temp_div.append(title_inp);
+
+                return temp_div;
+            }
+
+            function create_two_option_input(opt1, opt2) {
+                var temp_div = document.createElement("div");
+                temp_div.setAttribute("class", "form-two-option-field");
+
+                var div1 = document.createElement("div");
+                div1.onclick = option_1_clicked;
+                div1.innerHTML = opt1;
+
+                var div2 = document.createElement("div");
+                div2.onclick = option_2_clicked;
+                div2.innerHTML = opt2;
+
+                if (selected == 1) {
+                    div1.setAttribute("class", "form-two-option-selected");
+                    div2.setAttribute("class", "form-two-option-non");
+                } else {
+                    div1.setAttribute("class", "form-two-option-non");
+                    div2.setAttribute("class", "form-two-option-selected");
+                }
+
+                temp_div.append(div1);
+                temp_div.append(div2);
+
+                return temp_div
+            }
+
+            function option_1_clicked() {
+                if (selected == 2) {
+                    selected = 1;
+                    reset();
+                }
+            }
+
+            function option_2_clicked() {
+                if (selected == 1) {
+                    selected = 2;
+                    reset();
+                }
+            }
+
+            function create_form() {
+                var form = document.createElement("form");
+
+                var temp_div = create_text_input("Title", title);
+                form.append(temp_div);
+
+                var temp_div = create_text_input("Description", desc);
+                form.append(temp_div);
+
+                var temp_div = create_two_option_input("GET", "POST");
+                form.append(temp_div);
+
+                // create generate button
+                var temp_div = document.createElement("div");
+                temp_div.setAttribute("class", "form-button-field");
+
+                var generate_button = document.createElement("button");
+                generate_button.setAttribute("class", "form-button");
+                generate_button.innerHTML = "Generate";
+                generate_button.onclick = reset;
+
+                temp_div.append(generate_button);
+
+                form.append(temp_div);
+
+                form.addEventListener("change", generate, false);
+
+                document.body.innerHTML = "";
+                document.body.appendChild(form);
+                document.body.appendChild(gen_area_div);
+            }
+        </script>
+    </body>
+</html>

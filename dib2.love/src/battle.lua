@@ -17,8 +17,6 @@ function Battle:new(parent)
 
     battle.colors = {battle.COLOR1, battle.COLOR2, battle.COLOR3, battle.COLOR4, battle.COLOR5, battle.COLOR6}
 
-    battle.background = love.graphics.newImage('img/background.png')
-
     -- monster lists
     battle.curMonster = nil
     battle.playerMonsters = {}
