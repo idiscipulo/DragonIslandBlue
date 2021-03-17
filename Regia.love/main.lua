@@ -41,7 +41,7 @@ function love.update()
     battle:update()
 end
 
-function love.draw()
+function love.draw()    
     -- set focus to canvas
     love.graphics.setCanvas(canvas)
     -- clear current frame
@@ -60,4 +60,7 @@ function love.draw()
 
     -- draw the canvas
     love.graphics.draw(canvas, 0, 0)
+
+    -- clear shader
+    love.graphics.setShader()
 end
