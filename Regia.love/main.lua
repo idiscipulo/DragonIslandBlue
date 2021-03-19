@@ -28,20 +28,49 @@ function love.load()
     
     -- initialize custom graphics
     customGraphics = CustomGraphics:new()
-    customGraphics:swapColors()
+
+    -- initialize palettes
+    palettes = {love.image.newImageData('img/palettes/default.png'),
+                love.image.newImageData('img/palettes/sunnyD.png'),
+                love.image.newImageData('img/palettes/denim.png'),
+                love.image.newImageData('img/palettes/pumpkin.png')}
+    paletteIndex = 1
+    cycleIndex = 1
+
+    -- initialize tap
+    input = Input:new()
 
     -- initialize battle
     battle =  Battle:new()
 end
 
 function love.update()
-    -- >> UPDATE GAME HERE <<
+    ----------------------
+    -- UPDATE GAME HERE --
+    ----------------------
+    
+    -- if true consume input
+    local tapped, pressed = input:update()
+
+    if tapped then
+        -- cycle the color palettes
+        paletteIndex = (paletteIndex % #palettes) + 1
+        customGraphics:swapColors(palettes[paletteIndex], cycleIndex)
+    elseif pressed then
+        -- cycle the colors in the palette
+        cycleIndex = (cycleIndex % 5) + 1
+        customGraphics:cycleColors(cycleIndex)
+    end
 
     -- update battle
     battle:update()
 end
 
-function love.draw()    
+function love.draw()
+    --------------------
+    -- DRAW TO CANVAS --
+    --------------------
+
     -- set focus to canvas
     love.graphics.setCanvas(canvas)
     -- clear current frame
@@ -51,6 +80,10 @@ function love.draw()
 
     -- draw battle
     battle:draw()
+
+    ---------------------------
+    -- DRAW CANVAS TO WINDOW --
+    ---------------------------
 
     -- remove focus from canvas
     love.graphics.setCanvas()
@@ -63,4 +96,14 @@ function love.draw()
 
     -- clear shader
     love.graphics.setShader()
+end
+
+function love:keypressed(key)
+    -- start input
+    input:start()
+end
+
+function love:keyreleased(key)
+    -- finish input
+    input:done()
 end

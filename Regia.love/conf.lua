@@ -12,5 +12,7 @@ function love.conf(t)
     -- include
     require('src/customGraphics')
 
+    require('src/input')
+
     require('src/battle')
 end

@@ -5,6 +5,7 @@ function Battle:new(parent)
     local battle = {}
     setmetatable(battle, Battle)
 
+    -- load background image
     battle.background = love.graphics.newImage('img/backgrounds/battle.png')
 
     return battle
