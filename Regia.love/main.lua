@@ -50,16 +50,20 @@ function love.update()
     ----------------------
     
     -- if true consume input
-    local tapped, pressed = input:update()
+    local tapped, pressed, key = input:update()
 
-    if tapped then
-        -- cycle the color palettes
-        paletteIndex = (paletteIndex % #palettes) + 1
-        customGraphics:swapColors(palettes[paletteIndex], cycleIndex)
-    elseif pressed then
-        -- cycle the colors in the palette
-        cycleIndex = (cycleIndex % 5) + 1
-        customGraphics:cycleColors(cycleIndex)
+    if CHEAT and key == 'kp0' then
+        print('test')
+    else
+        if tapped then
+            -- cycle the color palettes
+            paletteIndex = (paletteIndex % #palettes) + 1
+            customGraphics:swapColors(palettes[paletteIndex], cycleIndex)
+        elseif pressed then
+            -- cycle the colors in the palette
+            cycleIndex = (cycleIndex % 5) + 1
+            customGraphics:cycleColors(cycleIndex)
+        end
     end
 
     -- update battle
@@ -100,10 +104,10 @@ end
 
 function love:keypressed(key)
     -- start input
-    input:start()
+    input:start(key)
 end
 
-function love:keyreleased(key)
+function love:keyreleased()
     -- finish input
     input:done()
 end

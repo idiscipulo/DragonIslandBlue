@@ -2,6 +2,12 @@ function love.conf(t)
     t.console = true
     t.window.highdpi = true
 
+    ------------------------------
+    -- DISABLE FOR DISTRIBUTION --
+    ------------------------------
+    CHEAT = true
+    ------------------------------
+
     -- configs
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 450

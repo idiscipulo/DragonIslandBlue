@@ -5,6 +5,7 @@ function Input:new()
     input = {}
     setmetatable(input, Input)
 
+    input.key = nil
     input.tapped = false
     input.pressed = false
     input.isStart = false
@@ -15,7 +16,8 @@ function Input:new()
 end
 
 -- start input
-function Input:start()
+function Input:start(key)
+    self.key = key
     self.isStart = true
 end
 
@@ -31,16 +33,18 @@ function Input:get()
     if self.isDone then
         local tapped = self.tapped
         local pressed = self.pressed
+        local key = self.key
 
         self:clear()
 
-        return tapped, pressed
+        return tapped, pressed, key
     else
-        return false, false
+        return false, false, nil
     end
 end
 
 function Input:clear()
+    self.key = nil
     self.tapped = false
     self.pressed = false
     self.isStart = false
