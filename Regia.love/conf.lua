@@ -1,24 +1,38 @@
 function love.conf(t)
-    t.console = true
+    ---------------------------
+    -- LOVE2D CONFIGURATIONS --
+    ---------------------------
     t.window.highdpi = true
 
     ------------------------------
     -- DISABLE FOR DISTRIBUTION --
     ------------------------------
-    CHEAT = true
-    ------------------------------
+    
+    -- print to console
+    t.console = true
 
-    -- configs
+    -- enable cheats and editing
+    CHEAT = true
+
+    ---------------
+    -- CONSTANTS --
+    ---------------
+
+    -- screen constants
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 450
     VSYNC = true
     FULLSCREEN = false
     OPTIONS = {vsync = VSYNC, fullscreen = FULLSCREEN}
 
-    -- include
-    require('src/customGraphics')
+    -------------
+    -- INCLUDE --
+    -------------
 
+    -- helpers
+    require('src/customGraphics')
     require('src/touchInput')
 
+    -- states
     require('src/battle')
 end
