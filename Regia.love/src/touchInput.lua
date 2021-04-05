@@ -2,28 +2,26 @@ Input = {}
 Input.__index = Input
 
 function Input:new()
-    input = {}
-    setmetatable(input, Input)
+    touchInput = {}
+    setmetatable(touchInput, Input)
 
-    input.key = nil
-    input.tapped = false
-    input.pressed = false
-    input.isStart = false
-    input.isDone = false
-    input.time = 0
+    touchInput.tapped = false
+    touchInput.pressed = false
+    touchInput.isStart = false
+    touchInput.isDone = false
+    touchInput.time = 0
     
-    return input
+    return touchInput
 end
 
 -- start input
-function Input:start(key)
-    self.key = key
+function Input:start(x, y)
     self.isStart = true
 end
 
 -- end input
-function Input:done()
-    if self.isStart then
+function Input:done(x, y)
+    if self.isStart then 
         self.isDone = true
         self.tapped = true
     end
@@ -33,18 +31,16 @@ function Input:get()
     if self.isDone then
         local tapped = self.tapped
         local pressed = self.pressed
-        local key = self.key
 
         self:clear()
 
-        return tapped, pressed, key
+        return tapped, pressed
     else
-        return false, false, nil
+        return false, false
     end
 end
 
 function Input:clear()
-    self.key = nil
     self.tapped = false
     self.pressed = false
     self.isStart = false
@@ -52,7 +48,7 @@ function Input:clear()
     self.time = 0
 end
 
--- return true/false and consume input if true
+-- return true/false and consume touchInput if true
 function Input:update()
     if self.isStart then
         self.time = self.time + 1

@@ -10,22 +10,13 @@
 ]]--
 
 function love.load()
-    -- set random seed
-    love.math.setRandomSeed(os.time())
-
-    -- set pixel scaling filter
-    love.graphics.setDefaultFilter('nearest', 'nearest')
-
-    -- initialize font
-    font = love.graphics.newImageFont('font/imgFont.png', ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`\'*#=[]"')
-    love.graphics.setFont(font)
-
-    -- initialize screen
-    love.window.setMode(SCREEN_WIDTH, SCREEN_HEIGHT, OPTIONS)
+    ---------------------------
+    -- INITIALIZE EVERYTHING --
+    ---------------------------
 
     -- initialize canvas
     canvas = love.graphics.newCanvas(SCREEN_WIDTH, SCREEN_HEIGHT)
-    
+
     -- initialize custom graphics
     customGraphics = CustomGraphics:new()
 
@@ -37,37 +28,63 @@ function love.load()
     paletteIndex = 1
     cycleIndex = 1
 
+    -- initialize font
+    font = love.graphics.newImageFont('font/imgFont.png', ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`\'*#=[]"')
+
     -- initialize tap
-    input = Input:new()
+    touchInput = Input:new()
 
     -- initialize battle
     battle =  Battle:new()
+
+    --------------------
+    -- SET EVERYTHING --
+    --------------------
+
+    -- set random seed
+    love.math.setRandomSeed(os.time())
+
+    -- set pixel scaling filter
+    love.graphics.setDefaultFilter('nearest', 'nearest')
+
+    -- set font
+    love.graphics.setFont(font)
+
+    -- set screen
+    love.window.setMode(SCREEN_WIDTH, SCREEN_HEIGHT, OPTIONS)
+
 end
 
 function love.update()
-    ----------------------
-    -- UPDATE GAME HERE --
-    ----------------------
+    ----------------
+    -- GET INPUTS --
+    ----------------
     
-    -- if true consume input
-    local tapped, pressed, key = input:update()
+    -- get mouse touchInput
+    local tapped, pressed = touchInput:update()
 
-    if CHEAT and key == 'kp0' then
-        print('test')
-    else
-        if tapped then
-            -- cycle the color palettes
-            paletteIndex = (paletteIndex % #palettes) + 1
-            customGraphics:swapColors(palettes[paletteIndex], cycleIndex)
-        elseif pressed then
-            -- cycle the colors in the palette
-            cycleIndex = (cycleIndex % 5) + 1
-            customGraphics:cycleColors(cycleIndex)
-        end
-    end
-
+    --------------------------
+    -- UPDATE CURRENT STATE --
+    --------------------------
+   
     -- update battle
     battle:update()
+
+    ------------------------
+    -- NON-STATE HANDLING --
+    ------------------------
+
+    -- if tap
+    if tapped then
+        -- cycle the color palettes
+        paletteIndex = (paletteIndex % #palettes) + 1
+        customGraphics:swapColors(palettes[paletteIndex], cycleIndex)
+    -- if hold
+    elseif pressed then
+        -- cycle the colors in the palette
+        cycleIndex = (cycleIndex % 5) + 1
+        customGraphics:cycleColors(cycleIndex)
+    end
 end
 
 function love.draw()
@@ -80,7 +97,9 @@ function love.draw()
     -- clear current frame
     love.graphics.clear()
 
-    -- >> DRAW GRAPHICS HERE <<
+    -----------------------------
+    -- DRAW ELEMENTS TO CANVAS --
+    -----------------------------
 
     -- draw battle
     battle:draw()
@@ -102,12 +121,18 @@ function love.draw()
     love.graphics.setShader()
 end
 
-function love:keypressed(key)
-    -- start input
-    input:start(key)
+function love:mousepressed(x, y)
+    -----------------
+    -- start input --
+    -----------------
+    touchInput:start(x, y)
 end
 
-function love:keyreleased()
-    -- finish input
-    input:done()
+function love:mousereleased(x, y)
+    ------------------
+    -- finish input --
+    ------------------
+
+    -- finishes if the touch has not timed out
+    touchInput:done(x, y)
 end
