@@ -13,7 +13,6 @@ function love.load()
     ---------------------------
     -- INITIALIZE EVERYTHING --
     ---------------------------
-
     -- initialize canvas
     canvas = love.graphics.newCanvas(SCREEN_WIDTH, SCREEN_HEIGHT)
 
@@ -40,7 +39,6 @@ function love.load()
     --------------------
     -- SET EVERYTHING --
     --------------------
-
     -- set random seed
     love.math.setRandomSeed(os.time())
 
@@ -59,21 +57,18 @@ function love.update()
     ----------------
     -- GET INPUTS --
     ----------------
-    
     -- get mouse touchInput
     local tapped, pressed = touchInput:update()
 
     --------------------------
     -- UPDATE CURRENT STATE --
     --------------------------
-   
     -- update battle
     battle:update()
 
     ------------------------
     -- NON-STATE HANDLING --
     ------------------------
-
     -- if tap
     if tapped then
         -- cycle the color palettes
@@ -91,7 +86,6 @@ function love.draw()
     --------------------
     -- DRAW TO CANVAS --
     --------------------
-
     -- set focus to canvas
     love.graphics.setCanvas(canvas)
     -- clear current frame
@@ -100,14 +94,12 @@ function love.draw()
     -----------------------------
     -- DRAW ELEMENTS TO CANVAS --
     -----------------------------
-
     -- draw battle
     battle:draw()
 
     ---------------------------
     -- DRAW CANVAS TO WINDOW --
     ---------------------------
-
     -- remove focus from canvas
     love.graphics.setCanvas()
 
@@ -132,7 +124,6 @@ function love:mousereleased(x, y)
     ------------------
     -- finish input --
     ------------------
-
     -- finishes if the touch has not timed out
     touchInput:done(x, y)
 end

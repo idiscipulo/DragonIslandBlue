@@ -7,7 +7,6 @@ function love.conf(t)
     ------------------------------
     -- DISABLE FOR DISTRIBUTION --
     ------------------------------
-    
     -- print to console
     t.console = true
 
@@ -17,7 +16,6 @@ function love.conf(t)
     ---------------
     -- CONSTANTS --
     ---------------
-
     -- screen constants
     SCREEN_WIDTH = 800
     SCREEN_HEIGHT = 450
@@ -25,10 +23,12 @@ function love.conf(t)
     FULLSCREEN = false
     OPTIONS = {vsync = VSYNC, fullscreen = FULLSCREEN}
 
+    -- input constants
+    TOUCH_PRESSED_THRESHOLD = 30
+
     -------------
     -- INCLUDE --
     -------------
-
     -- helpers
     require('src/customGraphics')
     require('src/touchInput')
