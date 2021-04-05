@@ -1,16 +1,27 @@
 CustomGraphics = {}
 CustomGraphics.__index = CustomGraphics
 
+--------------------------------
+-- CLASS FOR PALETTE SWAPPING --
+--------------------------------
 function CustomGraphics:new()
     customGraphics = {}
     setmetatable(customGraphics, CustomGraphics)
 
-    -- data for pulling colors
+    --------------------------
+    -- INITIALIZE VARIABLES --
+    --------------------------
+    -- initialize default palette
     customGraphics.defaultImageData = love.image.newImageData('img/palettes/default.png')
+
+    -- initialize palette swap variables
     customGraphics.curImageData = nil
     customGraphics.curCycle = 0
 
-    -- the actual shader
+    -----------------------
+    -- INITIALIZE SHADER --
+    -----------------------
+    -- written in GLSL
     customGraphics.shader = love.graphics.newShader[[
         extern vec4 col1;
         extern vec4 col2;
@@ -36,26 +47,37 @@ function CustomGraphics:new()
         }
     ]]
 
-    -- initialize the colors for the shader
+    -- set default palette
     customGraphics:swapColors()
 
     return customGraphics
 end
 
+----------------------------
+-- SWAP OR CYCLE PALETTES --
+----------------------------
 function CustomGraphics:swapColors(imageData, offset)
-    -- get image to pull colors from
+    -- if no palette given
     if imageData == nil then
+        -- use default palette
         self.curImageData = self.defaultImageData
+    -- if palette given
     else
+        -- use given palette
         self.curImageData = imageData
     end
 
-    -- select and send colors to the shader
+    -- send palette to shader with given offset
     self:cycleColors(offset)
 end
 
+--------------------------------------
+-- CYCLE AND SEND PALETTE TO SHADER --
+--------------------------------------
 function CustomGraphics:cycleColors(offset)
+    -- if no offset given
     if offset == nil then
+        -- don't cycle the palette
         offset = 0
     end
 

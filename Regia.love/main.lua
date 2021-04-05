@@ -9,6 +9,9 @@
     etc.
 ]]--
 
+----------------------------------
+-- CALLED ONCE AT PROGRAM START --
+----------------------------------
 function love.load()
     ---------------------------
     -- INITIALIZE EVERYTHING --
@@ -53,6 +56,9 @@ function love.load()
 
 end
 
+----------------------
+-- MAIN LOOP UPDATE --
+----------------------
 function love.update()
     ----------------
     -- GET INPUTS --
@@ -82,6 +88,9 @@ function love.update()
     end
 end
 
+--------------------
+-- MAIN LOOP DRAW --
+--------------------
 function love.draw()
     --------------------
     -- DRAW TO CANVAS --
@@ -113,6 +122,11 @@ function love.draw()
     love.graphics.setShader()
 end
 
+------------------------
+-- CALLBACK FUNCTIONS --
+------------------------
+
+-- if mouse or touch is pressed
 function love:mousepressed(x, y)
     -----------------
     -- start input --
@@ -120,6 +134,7 @@ function love:mousepressed(x, y)
     touchInput:start(x, y)
 end
 
+-- if mouse or touch is released
 function love:mousereleased(x, y)
     ------------------
     -- finish input --
