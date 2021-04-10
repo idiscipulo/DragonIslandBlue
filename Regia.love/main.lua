@@ -28,7 +28,8 @@ function love.load()
     -- initialize touch input
     touchInput = TouchInput:new()
 
-    cheat = Cheat:new()
+    -- initialize text input
+    textInput = TextInput:new()
 
     -- initialize battle
     battle =  Battle:new()
@@ -45,6 +46,12 @@ function love.load()
     -- set font
     love.graphics.setFont(font)
 
+    -- set text input hookup
+    if CHEAT then
+        textInput:setVerbose(true)
+        textInput:hookup(Cheat:new())
+    end
+
     -- set screen
     love.window.setMode(SCREEN_WIDTH, SCREEN_HEIGHT, OPTIONS)
 
@@ -60,7 +67,7 @@ function love.update()
     -- get mouse touchInput
     local tapped, pressed = touchInput:update()
 
-    cheat:update()
+    textInput:update()
 
     --------------------------
     -- UPDATE CURRENT STATE --
@@ -113,24 +120,26 @@ end
 -- CALLBACK FUNCTIONS --
 ------------------------
 
--- if key released
+--------------------
+-- KEYBOARD INPUT --
+--------------------
+-- if a key is released
 function love:keyreleased(key)
-    cheat:getKey(key)
+    -- submit the key to text input
+    textInput:getKey(key)
 end
 
+-----------------------
+-- MOUSE/TOUCH INPUT --
+-----------------------
 -- if mouse or touch is pressed
 function love:mousepressed(x, y)
-    -----------------
-    -- start input --
-    -----------------
+    -- starts input
     touchInput:start(x, y)
 end
 
 -- if mouse or touch is released
 function love:mousereleased(x, y)
-    ------------------
-    -- finish input --
-    ------------------
-    -- finishes if the touch has not timed out
+    -- finishes input if it hasn't timed out yet
     touchInput:done(x, y)
 end

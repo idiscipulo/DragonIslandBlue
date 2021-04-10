@@ -32,7 +32,7 @@ function love.conf(t)
     -- helpers
     require('src/customGraphics')
     require('src/touchInput')
-    require('src/keyInput')
+    require('src/textInput')
     
     -- cheat
     require('src/cheat')
