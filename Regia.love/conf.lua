@@ -32,6 +32,10 @@ function love.conf(t)
     -- helpers
     require('src/customGraphics')
     require('src/touchInput')
+    require('src/keyInput')
+    
+    -- cheat
+    require('src/cheat')
 
     -- states
     require('src/battle')

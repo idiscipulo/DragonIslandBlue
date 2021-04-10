@@ -21,6 +21,7 @@ end
 -- UPDATE --
 ------------
 function Battle:update()
+    
 end
 
 ----------

@@ -1,13 +1,13 @@
-Input = {}
-Input.__index = Input
+TouchInput = {}
+TouchInput.__index = TouchInput
 
 ---------------------------------
 -- CLASS FOR TOUCHSCREEN INPUT --
 ---------------------------------
 -- also works for mouse
-function Input:new()
+function TouchInput:new()
     touchInput = {}
-    setmetatable(touchInput, Input)
+    setmetatable(touchInput, TouchInput)
 
     --------------------------
     -- INITIALIZE VARIABLES --
@@ -24,14 +24,14 @@ end
 -----------------
 -- START INPUT --
 -----------------
-function Input:start(x, y)
+function TouchInput:start(x, y)
     self.isStart = true
 end
 
 ---------------
 -- END INPUT --
 ---------------
-function Input:done(x, y)
+function TouchInput:done(x, y)
     -- if input has started
     if self.isStart then 
         -- end input
@@ -43,7 +43,7 @@ end
 ---------------------------
 -- CLEAR INPUT VARIABLES --
 ---------------------------
-function Input:clear()
+function TouchInput:clear()
     -- clear variables
     self.tapped = false
     self.pressed = false
@@ -55,7 +55,7 @@ end
 ------------------------------------
 -- UPDATE INPUT AND RETURN STATUS --
 ------------------------------------
-function Input:update()
+function TouchInput:update()
     ----------------------
     -- IF INPUT STARTED --
     ----------------------

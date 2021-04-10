@@ -22,19 +22,13 @@ function love.load()
     -- initialize custom graphics
     customGraphics = CustomGraphics:new()
 
-    -- initialize palettes
-    palettes = {love.image.newImageData('img/palettes/default.png'),
-                love.image.newImageData('img/palettes/sunnyD.png'),
-                love.image.newImageData('img/palettes/denim.png'),
-                love.image.newImageData('img/palettes/pumpkin.png')}
-    paletteIndex = 1
-    cycleIndex = 1
-
     -- initialize font
     font = love.graphics.newImageFont('font/imgFont.png', ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`\'*#=[]"')
 
-    -- initialize tap
-    touchInput = Input:new()
+    -- initialize touch input
+    touchInput = TouchInput:new()
+
+    cheat = Cheat:new()
 
     -- initialize battle
     battle =  Battle:new()
@@ -66,6 +60,8 @@ function love.update()
     -- get mouse touchInput
     local tapped, pressed = touchInput:update()
 
+    cheat:update()
+
     --------------------------
     -- UPDATE CURRENT STATE --
     --------------------------
@@ -75,17 +71,8 @@ function love.update()
     ------------------------
     -- NON-STATE HANDLING --
     ------------------------
-    -- if tap
-    if tapped then
-        -- cycle the color palettes
-        paletteIndex = (paletteIndex % #palettes) + 1
-        customGraphics:swapColors(palettes[paletteIndex], cycleIndex)
-    -- if hold
-    elseif pressed then
-        -- cycle the colors in the palette
-        cycleIndex = (cycleIndex % 5) + 1
-        customGraphics:cycleColors(cycleIndex)
-    end
+    -- update shader
+    customGraphics:update(tapped, pressed)
 end
 
 --------------------
@@ -125,6 +112,11 @@ end
 ------------------------
 -- CALLBACK FUNCTIONS --
 ------------------------
+
+-- if key released
+function love:keyreleased(key)
+    cheat:getKey(key)
+end
 
 -- if mouse or touch is pressed
 function love:mousepressed(x, y)

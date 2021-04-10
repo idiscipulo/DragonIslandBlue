@@ -11,11 +11,14 @@ function CustomGraphics:new()
     --------------------------
     -- INITIALIZE VARIABLES --
     --------------------------
-    -- initialize default palette
-    customGraphics.defaultImageData = love.image.newImageData('img/palettes/default.png')
+    -- initialize palettes
+    customGraphics.palettes = {love.image.newImageData('img/palettes/default.png'),
+                                love.image.newImageData('img/palettes/sunnyD.png'),
+                                love.image.newImageData('img/palettes/denim.png'),
+                                love.image.newImageData('img/palettes/pumpkin.png')}
 
     -- initialize palette swap variables
-    customGraphics.curImageData = nil
+    customGraphics.curPalette = 1
     customGraphics.curCycle = 0
 
     -----------------------
@@ -48,49 +51,45 @@ function CustomGraphics:new()
     ]]
 
     -- set default palette
-    customGraphics:swapColors()
+    customGraphics:setColors()
 
     return customGraphics
 end
 
-----------------------------
--- SWAP OR CYCLE PALETTES --
-----------------------------
-function CustomGraphics:swapColors(imageData, offset)
-    -- if no palette given
-    if imageData == nil then
-        -- use default palette
-        self.curImageData = self.defaultImageData
-    -- if palette given
-    else
-        -- use given palette
-        self.curImageData = imageData
-    end
+-------------------
+-- SWAP PALETTES --
+-------------------
+function CustomGraphics:swap()
+    self.curPalette = (self.curPalette % #self.palettes) + 1
 
-    -- send palette to shader with given offset
-    self:cycleColors(offset)
+    self.curCycle = 0
+
+    self:setColors()
 end
 
---------------------------------------
--- CYCLE AND SEND PALETTE TO SHADER --
---------------------------------------
-function CustomGraphics:cycleColors(offset)
-    -- if no offset given
-    if offset == nil then
-        -- don't cycle the palette
-        offset = 0
-    end
+------------------
+-- CYCLE COLORS --
+------------------
+function CustomGraphics:cycle()
+    self.curCycle = (self.curCycle % 5) + 1
 
+    self:setColors()
+end
+
+----------------
+-- SET COLORS --
+----------------
+function CustomGraphics:setColors()
     -- retrieve colors from image data
-    local r, g, b, a = self.curImageData:getPixel((0 + offset) % 5, 0)
+    local r, g, b, a = self.palettes[self.curPalette]:getPixel((0 + self.curCycle) % 5, 0)
     local col1 = {r, g, b, a}
-    local r, g, b, a = self.curImageData:getPixel((1 + offset) % 5, 0)
+    local r, g, b, a = self.palettes[self.curPalette]:getPixel((1 + self.curCycle) % 5, 0)
     local col2 = {r, g, b, a}
-    local r, g, b, a = self.curImageData:getPixel((2 + offset) % 5, 0)
+    local r, g, b, a = self.palettes[self.curPalette]:getPixel((2 + self.curCycle) % 5, 0)
     local col3 = {r, g, b, a}
-    local r, g, b, a = self.curImageData:getPixel((3 + offset) % 5, 0)
+    local r, g, b, a = self.palettes[self.curPalette]:getPixel((3 + self.curCycle) % 5, 0)
     local col4 = {r, g, b, a}
-    local r, g, b, a = self.curImageData:getPixel((4 + offset) % 5, 0)
+    local r, g, b, a = self.palettes[self.curPalette]:getPixel((4 + self.curCycle) % 5, 0)
     local col5 = {r, g, b, a}
 
     -- send colors to the shader
@@ -99,4 +98,17 @@ function CustomGraphics:cycleColors(offset)
     self.shader:send('col3', col3)
     self.shader:send('col4', col4)
     self.shader:send('col5', col5)
+end
+
+------------
+-- UPDATE --
+------------
+function CustomGraphics:update(tapped, pressed)
+    -- if tap
+    if tapped then
+        customGraphics:swap()
+    -- if hold
+    elseif pressed then
+        customGraphics:cycle()
+    end
 end
