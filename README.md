@@ -7,7 +7,7 @@ This guide outlines the formatting and commenting conventions for this project.
 ### Classes
 For files that define a class, use the following conventions.
 
-## Declaration and Constructor
+#### Declaration and Constructor
 ```lua=
 Example = {}
 Example.__index = Example
