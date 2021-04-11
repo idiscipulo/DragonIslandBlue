@@ -9,9 +9,10 @@
     etc.
 ]]--
 
-----------------------------------
--- CALLED ONCE AT PROGRAM START --
-----------------------------------
+----------
+-- LOAD --
+----------
+-- called once at program start
 function love.load()
     ---------------------------
     -- INITIALIZE EVERYTHING --
@@ -63,9 +64,9 @@ function love.load()
 
 end
 
-----------------------
--- MAIN LOOP UPDATE --
-----------------------
+------------
+-- UPDATE --
+------------
 function love.update()
     ----------------
     -- GET INPUTS --
@@ -83,9 +84,9 @@ function love.update()
     GLOBAL.battle:update()
 end
 
---------------------
--- MAIN LOOP DRAW --
---------------------
+----------
+-- DRAW --
+----------
 function love.draw()
     --------------------
     -- DRAW TO CANVAS --

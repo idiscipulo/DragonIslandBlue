@@ -1,9 +1,9 @@
 Battle = {}
 Battle.__index = Battle
 
------------------------
--- CLASS FOR BATTLES --
------------------------
+------------
+-- BATTLE --
+------------
 function Battle:new(parent)
     local battle = {}
     setmetatable(battle, Battle)

@@ -1,10 +1,10 @@
 TouchInput = {}
 TouchInput.__index = TouchInput
 
----------------------------------
--- CLASS FOR TOUCHSCREEN INPUT --
----------------------------------
--- also works for mouse
+----------------
+-- TOUCHINPUT --
+----------------
+-- class for touchscreen, also works for mouse
 function TouchInput:new()
     touchInput = {}
     setmetatable(touchInput, TouchInput)

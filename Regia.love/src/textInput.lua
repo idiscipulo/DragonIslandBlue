@@ -1,9 +1,9 @@
 TextInput = {}
 TextInput.__index = TextInput
 
---------------------------
--- CLASS FOR TEXT INPUT --
---------------------------
+---------------
+-- TEXTINPUT --
+---------------
 function TextInput:new()
     textInput = {}
     setmetatable(textInput, TextInput)
@@ -44,7 +44,7 @@ end
 ------------
 -- HOOKUP --
 ------------
--- add object to recieve the string when submitted
+-- add class to recieve the string when submitted
 function TextInput:hookup(hook)
     -- add hook to list
     table.insert(self.hooks, hook)

@@ -1,9 +1,10 @@
 CustomGraphics = {}
 CustomGraphics.__index = CustomGraphics
 
---------------------------------
--- CLASS FOR PALETTE SWAPPING --
---------------------------------
+--------------------
+-- CUSTOMGRAPHICS --
+--------------------
+-- class for palette swapping
 function CustomGraphics:new()
     customGraphics = {}
     setmetatable(customGraphics, CustomGraphics)
