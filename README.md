@@ -1,50 +1,14 @@
 
 # REGIA
 
-## File Layout
-For files defining a class, use the template outlined below.
+## Style Guide
+This guide outlines the formatting and commenting conventions for this project.
 
-#### Initialize
-Initialize the class in the first two lines.
+### Classes
+For files that define a class, use the following conventions.
 
-```lua
-Example = {}
-Example.__index = Example
-```
-
-#### Header Comment
-Comment the class name and a short description
-
-```lua
--------------
--- EXAMPLE --
--------------
--- this is an example class
-```
-
-#### Constructor
-Create the class instance and set it's namespace
-```lua
-function Example:new(exampleParam)
-    example = {}
-    setmetatable(example, Example)
-```
-
-Define attributes, then return the instance.
-
-```lua
-    --------------------------
-    -- INITIALIZE VARIABLES --
-    --------------------------
-    example.val = exampleParam
-    
-    return example
-end
-```
-    
-### Completed File
-
-```lua
+## Declaration and Constructor
+```lua=
 Example = {}
 Example.__index = Example
 
@@ -64,3 +28,5 @@ function Example:new(exampleParam)
     return example
 end
 ```
+
+Lua classes are created using tables and namespaces. In the first two lines we create the table for the class and set it's namespace. Then, a block comment with the class name and short description of the class. In the constructor method `new` we create a table for the class instance and set it's namespace to the parent class. We then initialize the attributes for the class (yes, the comment is necessary) and finally, return the instance
