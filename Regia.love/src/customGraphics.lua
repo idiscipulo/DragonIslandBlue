@@ -56,6 +56,15 @@ function CustomGraphics:new()
     return customGraphics
 end
 
+------------------
+-- CYCLE COLORS --
+------------------
+function CustomGraphics:cycle()
+    self.curCycle = (self.curCycle % 5) + 1
+
+    self:setColors()
+end
+
 -------------------
 -- SWAP PALETTES --
 -------------------
@@ -67,15 +76,6 @@ function CustomGraphics:swap(val)
     end
 
     self.curCycle = 0
-
-    self:setColors()
-end
-
-------------------
--- CYCLE COLORS --
-------------------
-function CustomGraphics:cycle()
-    self.curCycle = (self.curCycle % 5) + 1
 
     self:setColors()
 end

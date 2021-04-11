@@ -21,28 +21,9 @@ function TouchInput:new()
     return touchInput
 end
 
------------------
--- START INPUT --
------------------
-function TouchInput:start(x, y)
-    self.isStart = true
-end
-
----------------
--- END INPUT --
----------------
-function TouchInput:done(x, y)
-    -- if input has started
-    if self.isStart then 
-        -- end input
-        self.isDone = true
-        self.tapped = true
-    end
-end
-
----------------------------
--- CLEAR INPUT VARIABLES --
----------------------------
+-----------
+-- CLEAR --
+-----------
 function TouchInput:clear()
     -- clear variables
     self.tapped = false
@@ -52,9 +33,28 @@ function TouchInput:clear()
     self.time = 0
 end
 
-------------------------------------
--- UPDATE INPUT AND RETURN STATUS --
-------------------------------------
+----------
+-- DONE --
+----------
+function TouchInput:done(x, y)
+    -- if input has started
+    if self.isStart then 
+        -- end input
+        self.isDone = true
+        self.tapped = true
+    end
+end
+
+-----------
+-- START --
+-----------
+function TouchInput:start(x, y)
+    self.isStart = true
+end
+
+------------
+-- UPDATE --
+------------
 function TouchInput:update()
     ----------------------
     -- IF INPUT STARTED --

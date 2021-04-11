@@ -12,13 +12,21 @@ function Hacks:help()
     print('----------------')
     print('-- HACKS HELP --')
     print('----------------')
-    print('Commands:')
-    print('set palette #')
-    print('   - valid palettes:')
-    print('      1 default')
-    print('      2 denim')
-    print('      3 pumpkin')
-    print('      4 sunnyD')
+    print('SET PALETTE #')
+    print('   - changes the current palette.')
+    print('   1-default  2-denim')
+    print('   3-pumpkin  4-sunnyD')
+    print()
+    print('CYCLE PALETTE')
+    print('   - cycles the colors.')
+end
+
+function Hacks:parseCycle(tokens)
+    local token = table.remove(tokens, 1)
+
+    if token == 'palette' then
+        GLOBAL.customGraphics:cycle()
+    end
 end
 
 function Hacks:parseSet(tokens)
@@ -27,14 +35,6 @@ function Hacks:parseSet(tokens)
     if token == 'palette' then
         local idx = tonumber(table.remove(tokens, 1))
         GLOBAL.customGraphics:swap(idx)
-    end
-end
-
-function Hacks:parseCycle(tokens)
-    local token = table.remove(tokens, 1)
-
-    if token == 'palette' then
-        GLOBAL.customGraphics:cycle()
     end
 end
 

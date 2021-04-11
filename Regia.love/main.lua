@@ -16,7 +16,7 @@ function love.load()
     ---------------------------
     -- INITIALIZE EVERYTHING --
     ---------------------------
-    -- global variable for specifiying global scope
+    -- variable for specifiying global scope
     GLOBAL = {}
 
     -- initialize canvas
@@ -49,9 +49,12 @@ function love.load()
     -- set font
     love.graphics.setFont(GLOBAL.font)
 
-    -- set text input hookup
+    -- set hack engine if enabled
     if HACKS then
+        -- show text on console
         GLOBAL.textInput:setVerbose(true)
+
+        -- initialize hack engine
         GLOBAL.textInput:hookup(Hacks:new())
     end
 
@@ -67,9 +70,10 @@ function love.update()
     ----------------
     -- GET INPUTS --
     ----------------
-    -- get mouse touchInput
+    -- get mouse input
     local tapped, pressed = GLOBAL.touchInput:update()
 
+    -- get text input
     GLOBAL.textInput:update()
 
     --------------------------
