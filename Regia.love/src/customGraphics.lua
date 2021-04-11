@@ -13,9 +13,9 @@ function CustomGraphics:new()
     --------------------------
     -- initialize palettes
     customGraphics.palettes = {love.image.newImageData('img/palettes/default.png'),
-                                love.image.newImageData('img/palettes/sunnyD.png'),
                                 love.image.newImageData('img/palettes/denim.png'),
-                                love.image.newImageData('img/palettes/pumpkin.png')}
+                                love.image.newImageData('img/palettes/pumpkin.png'),
+                                love.image.newImageData('img/palettes/sunnyD.png')}
 
     -- initialize palette swap variables
     customGraphics.curPalette = 1
@@ -59,8 +59,12 @@ end
 -------------------
 -- SWAP PALETTES --
 -------------------
-function CustomGraphics:swap()
-    self.curPalette = (self.curPalette % #self.palettes) + 1
+function CustomGraphics:swap(val)
+    if val == nil then
+        self.curPalette = (self.curPalette % #self.palettes) + 1
+    else
+        self.curPalette = val
+    end
 
     self.curCycle = 0
 
@@ -98,17 +102,4 @@ function CustomGraphics:setColors()
     self.shader:send('col3', col3)
     self.shader:send('col4', col4)
     self.shader:send('col5', col5)
-end
-
-------------
--- UPDATE --
-------------
-function CustomGraphics:update(tapped, pressed)
-    -- if tap
-    if tapped then
-        customGraphics:swap()
-    -- if hold
-    elseif pressed then
-        customGraphics:cycle()
-    end
 end

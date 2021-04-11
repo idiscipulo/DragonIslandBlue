@@ -16,23 +16,26 @@ function love.load()
     ---------------------------
     -- INITIALIZE EVERYTHING --
     ---------------------------
+    -- global variable for specifiying global scope
+    GLOBAL = {}
+
     -- initialize canvas
-    canvas = love.graphics.newCanvas(SCREEN_WIDTH, SCREEN_HEIGHT)
+    GLOBAL.canvas = love.graphics.newCanvas(SCREEN_WIDTH, SCREEN_HEIGHT)
 
     -- initialize custom graphics
-    customGraphics = CustomGraphics:new()
+    GLOBAL.customGraphics = CustomGraphics:new()
 
     -- initialize font
-    font = love.graphics.newImageFont('font/imgFont.png', ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`\'*#=[]"')
+    GLOBAL.font = love.graphics.newImageFont('font/imgFont.png', ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`\'*#=[]"')
 
     -- initialize touch input
-    touchInput = TouchInput:new()
+    GLOBAL.touchInput = TouchInput:new()
 
     -- initialize text input
-    textInput = TextInput:new()
+    GLOBAL.textInput = TextInput:new()
 
     -- initialize battle
-    battle =  Battle:new()
+    GLOBAL.battle =  Battle:new()
 
     --------------------
     -- SET EVERYTHING --
@@ -44,12 +47,12 @@ function love.load()
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
     -- set font
-    love.graphics.setFont(font)
+    love.graphics.setFont(GLOBAL.font)
 
     -- set text input hookup
-    if CHEAT then
-        textInput:setVerbose(true)
-        textInput:hookup(Cheat:new())
+    if HACKS then
+        GLOBAL.textInput:setVerbose(true)
+        GLOBAL.textInput:hookup(Hacks:new())
     end
 
     -- set screen
@@ -65,21 +68,15 @@ function love.update()
     -- GET INPUTS --
     ----------------
     -- get mouse touchInput
-    local tapped, pressed = touchInput:update()
+    local tapped, pressed = GLOBAL.touchInput:update()
 
-    textInput:update()
+    GLOBAL.textInput:update()
 
     --------------------------
     -- UPDATE CURRENT STATE --
     --------------------------
     -- update battle
-    battle:update()
-
-    ------------------------
-    -- NON-STATE HANDLING --
-    ------------------------
-    -- update shader
-    customGraphics:update(tapped, pressed)
+    GLOBAL.battle:update()
 end
 
 --------------------
@@ -90,7 +87,7 @@ function love.draw()
     -- DRAW TO CANVAS --
     --------------------
     -- set focus to canvas
-    love.graphics.setCanvas(canvas)
+    love.graphics.setCanvas(GLOBAL.canvas)
     -- clear current frame
     love.graphics.clear()
 
@@ -98,7 +95,7 @@ function love.draw()
     -- DRAW ELEMENTS TO CANVAS --
     -----------------------------
     -- draw battle
-    battle:draw()
+    GLOBAL.battle:draw()
 
     ---------------------------
     -- DRAW CANVAS TO WINDOW --
@@ -107,10 +104,10 @@ function love.draw()
     love.graphics.setCanvas()
 
     -- set pixel shader
-    love.graphics.setShader(customGraphics.shader)
+    love.graphics.setShader(GLOBAL.customGraphics.shader)
 
     -- draw the canvas
-    love.graphics.draw(canvas, 0, 0)
+    love.graphics.draw(GLOBAL.canvas, 0, 0)
 
     -- clear shader
     love.graphics.setShader()
@@ -126,7 +123,7 @@ end
 -- if a key is released
 function love:keyreleased(key)
     -- submit the key to text input
-    textInput:getKey(key)
+    GLOBAL.textInput:getKey(key)
 end
 
 -----------------------
@@ -135,11 +132,11 @@ end
 -- if mouse or touch is pressed
 function love:mousepressed(x, y)
     -- starts input
-    touchInput:start(x, y)
+    GLOBAL.touchInput:start(x, y)
 end
 
 -- if mouse or touch is released
 function love:mousereleased(x, y)
     -- finishes input if it hasn't timed out yet
-    touchInput:done(x, y)
+    GLOBAL.touchInput:done(x, y)
 end

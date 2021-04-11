@@ -44,12 +44,7 @@ function TextInput:submit()
     local res = ''
 
     for i = 1, #self.hookups do
-        res = self.hookups[i]:submit(self.string)
-        allRes = string.format('%s %s', allRes, res)
-    end
-
-    if self.verbose then
-        print(string.format('...%s', allRes))
+        self.hookups[i]:submit(self.string)
     end
 
     self.string = ''
@@ -57,13 +52,8 @@ end
 
 function TextInput:cleanString()
     local sLen = #self.string
-    self.string = self.string:gsub('[ \t]+%f[\r\n%z]', '')
-
-    local cLen = #self.string
-
-    for i = 0, sLen - cLen - 1 do
-        io.write('\b')
-    end
+    self.string = string.gsub(self.string, '^%s*(.-)%s*$', '%1')
+    self.string = string.lower(self.string)
 end
 
 ------------------------------------
@@ -89,8 +79,10 @@ function TextInput:update()
             new = true
         elseif key == 'backspace' then
             io.write('\b')
+            io.write(' ')
+            io.write('\b')
             
-            self.string = self.string:sub(1, #self.string - 1)
+            self.string = string.sub(self.string, 1, #self.string - 1)
             key = ''
         elseif string.len(key) > 1 then
             key = ''

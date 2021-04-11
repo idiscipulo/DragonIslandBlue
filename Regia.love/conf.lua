@@ -11,7 +11,7 @@ function love.conf(t)
     t.console = true
 
     -- enable cheats and editing
-    CHEAT = true
+    HACKS = true
 
     ---------------
     -- CONSTANTS --
@@ -34,8 +34,8 @@ function love.conf(t)
     require('src/touchInput')
     require('src/textInput')
     
-    -- cheat
-    require('src/cheat')
+    -- hacks
+    require('src/hacks')
 
     -- states
     require('src/battle')
