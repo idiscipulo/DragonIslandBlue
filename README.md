@@ -17,7 +17,7 @@ Example.__index = Example
 -------------
 -- this is an example class
 function Example:new(exampleParam)
-    example = {}
+    local example = {}
     setmetatable(example, Example)
     
     --------------------------
