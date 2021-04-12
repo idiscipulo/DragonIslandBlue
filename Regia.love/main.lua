@@ -36,7 +36,7 @@ function love.load()
     GLOBAL.textInput = TextInput:new()
 
     -- initialize battle
-    GLOBAL.battle =  Battle:new()
+    GLOBAL.battle =  Game:new()
 
     --------------------
     -- SET EVERYTHING --

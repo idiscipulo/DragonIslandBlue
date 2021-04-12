@@ -39,4 +39,7 @@ function love.conf(t)
 
     -- states
     require('src/battle')
+
+    -- game
+    require('src/game')
 end
