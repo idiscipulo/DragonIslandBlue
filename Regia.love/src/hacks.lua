@@ -19,6 +19,12 @@ function Hacks:help()
     print()
     print('CYCLE PALETTE')
     print('   - cycles the colors.')
+    print()
+    print('SHOW HITBOXES')
+    print('   - shows hitboxes for objects.')
+    print()
+    print('HIDE HITBOXES')
+    print('   - hides hitboxes for objects.')
 end
 
 function Hacks:parseCycle(tokens)
@@ -37,6 +43,24 @@ function Hacks:parseSet(tokens)
         GLOBAL.customGraphics:swap(idx)
     end
 end
+
+function Hacks:parseShow(tokens)
+    local token = table.remove(tokens, 1)
+
+    if token == 'hitboxes' then
+        HACK_VARS.SHOW_HITBOXES = true
+    end
+end
+
+
+function Hacks:parseHide(tokens)
+    local token = table.remove(tokens, 1)
+
+    if token == 'hitboxes' then
+        HACK_VARS.SHOW_HITBOXES = false
+    end
+end
+
 
 function Hacks:submit(str)
     print()
@@ -57,5 +81,9 @@ function Hacks:submit(str)
         self:parseSet(tokens)
     elseif token == 'cycle' then
         self:parseCycle(tokens)
+    elseif token == 'show' then
+        self:parseShow(tokens)
+    elseif token == 'hide' then
+        self:parseHide(tokens)
     end
 end

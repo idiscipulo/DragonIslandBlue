@@ -12,6 +12,8 @@ function love.conf(t)
 
     -- enable cheats and editing
     HACKS = true
+    HACK_VARS = {}
+    HACK_VARS.SHOW_HITBOXES = false
 
     ---------------
     -- CONSTANTS --
@@ -33,12 +35,16 @@ function love.conf(t)
     require('src/customGraphics')
     require('src/touchInput')
     require('src/textInput')
+
+    -- core
+    require('src/object')
     
     -- hacks
     require('src/hacks')
 
     -- states
     require('src/battle')
+    require('src/map')
 
     -- game
     require('src/game')

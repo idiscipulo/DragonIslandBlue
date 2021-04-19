@@ -13,9 +13,10 @@ function Game:new()
     -- INITIALIZE VARIABLES --
     --------------------------
     game.battle = Battle:new()
+    game.map = Map:new()
 
     -- set current state
-    game.curState = game.battle
+    game.curState = game.map
 
     return game
 end
