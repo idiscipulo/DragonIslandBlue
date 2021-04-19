@@ -28,4 +28,4 @@ function Example:new(exampleParam)
     return example
 end
 ```
-Lua classes are created using tables and namespaces. In the first two lines we create the table for the class and set it's namespace. Then, a block comment with the class name and short description of the class. In the constructor method `new` we create a table for the class instance and set it's namespace to the parent class. We then initialize the attributes for the class (yes, the comment is necessary) and finally, return the instance
+Lua classes are created using tables and namespaces. In the first two lines we create the table for the class and use `Example.__index = Example` to create the namespace. Then, a block comment with the class name and short description of the class. In the constructor method `new` we create a table for the class instance and use `setmetatable(example, Example)` to set the namespace. We then initialize the attributes for the class (yes, the comment is necessary) and finally, return the instance
